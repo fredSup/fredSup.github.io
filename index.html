@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Frédéric Moukengue · Ingénieur Data & IA</title>
+<meta name="description" content="Portfolio de Frédéric Moukengue, ingénieur Data & IA : pipelines de données, assistants RAG et automatisation. Disponible pour un CDI.">
+<meta property="og:title" content="Frédéric Moukengue · Ingénieur Data & IA">
+<meta property="og:description" content="Pipelines de données, assistants IA (RAG) et automatisation. Disponible pour un CDI.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B6E69'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='26' font-weight='600' fill='white' text-anchor='middle'%3EFM%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F6F5F1;
+    --surface: #FFFFFF;
+    --surface-soft: #FAF9F6;
+    --ink: #16181D;
+    --ink-2: #2B2E34;
+    --muted: #474B54;
+    --line: #E2E0D8;
+    --line-strong: #C9C6BA;
+    --accent: #0B6E69;
+    --accent-ink: #08524E;
+    --accent-soft: #E3F0EE;
+    --chip: #EDEBE4;
+    --code: #3F5653;
+    --beta-bg: #F4D58D;
+    --beta-ink: #3D2E00;
+    --dark: #16181D;
+    --dark-ink: #F6F5F1;
+    --radius: 12px;
+    --max: 1180px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 17px; line-height: 1.6;
+  }
+  a { color: var(--accent); }
+  a:hover { color: var(--accent-ink); }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+  .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+  .skip { position: absolute; left: -999px; top: 8px; background: var(--ink); color: #fff; padding: 8px 14px; border-radius: 6px; z-index: 10; }
+  .skip:focus { left: 8px; }
+
+  /* Navigation */
+  header.top { border-bottom: 1px solid var(--line); background: var(--bg); }
+  .nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 16px; padding-block: 16px; }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); font-weight: 600; }
+  .brand:hover { color: var(--ink); }
+  .logo { width: 40px; height: 40px; border-radius: 8px; background: var(--accent); color: #fff; display: grid; place-items: center; font-family: "IBM Plex Mono", monospace; font-weight: 500; font-size: 15px; }
+  .nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 2px; margin: 0; padding: 0; }
+  .nav ul a { display: inline-block; padding: 10px 12px; color: #3A3E46; text-decoration: none; font-size: 15px; font-weight: 500; border-radius: 6px; }
+  .nav ul a:hover { background: var(--chip); color: var(--ink); }
+
+  /* Boutons */
+  .btns { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 20px; border-radius: 8px; font-weight: 600; font-size: 16px; text-decoration: none; border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink); }
+  .btn:hover { color: var(--ink); border-color: var(--ink); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .btn.primary:hover { background: var(--accent-ink); color: #fff; }
+  .btn.sm { min-height: 44px; padding: 0 16px; font-size: 15px; }
+  .btn svg { flex: none; }
+
+  /* Hero */
+  .hero { padding-block: 88px 80px; display: flex; flex-direction: column; gap: 26px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip-status { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; background: var(--accent-soft); color: #0A4F4B; font-size: 14px; font-weight: 600; }
+  .dot { width: 8px; height: 8px; border-radius: 999px; background: var(--accent); }
+  .chip-plain { display: inline-flex; align-items: center; padding: 6px 14px; border-radius: 999px; border: 1px solid #D6D3C8; color: #3A3E46; font-size: 14px; font-weight: 500; }
+  .eyebrow { margin: 0; font-family: "IBM Plex Mono", monospace; font-size: 15px; color: var(--accent); font-weight: 500; }
+  h1 { margin: 0; font-size: clamp(2.3rem, 5.6vw, 4.3rem); line-height: 1.07; font-weight: 700; letter-spacing: -0.02em; max-width: 900px; }
+  .lead { margin: 0; max-width: 690px; font-size: 19px; color: var(--muted); }
+
+  /* Sections */
+  section { scroll-margin-top: 16px; }
+  .band { background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .sec { padding-block: 84px; display: flex; flex-direction: column; gap: 36px; }
+  .sec-head { display: flex; flex-direction: column; gap: 8px; }
+  .sec-head p { margin: 0; font-family: "IBM Plex Mono", monospace; font-size: 14px; color: var(--accent); font-weight: 500; }
+  h2 { margin: 0; font-size: clamp(1.9rem, 3.6vw, 2.6rem); line-height: 1.15; font-weight: 700; letter-spacing: -0.01em; }
+  h3 { margin: 0; }
+
+  /* Cartes projets */
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); gap: 24px; }
+  .card { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--surface); }
+  .card.feature { grid-column: 1 / -1; }
+  .card-body { padding: 26px; display: flex; flex-direction: column; gap: 14px; flex-grow: 1; }
+  .card-title { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  .card h3 { font-size: 22px; line-height: 1.3; font-weight: 600; }
+  .card p { margin: 0; color: var(--muted); }
+  .stack { font-family: "IBM Plex Mono", monospace; font-size: 13px; color: var(--code); }
+  .tag { padding: 3px 10px; border-radius: 999px; background: var(--chip); color: #3A3E46; font-size: 13px; font-weight: 600; }
+  .tag.live { background: var(--accent-soft); color: #0A4F4B; }
+  .tag.beta { background: var(--beta-bg); color: var(--beta-ink); }
+  .card .btns { margin-top: auto; padding-top: 6px; gap: 10px; }
+  .card.soon { border-style: dashed; border-color: #BDB9AC; background: var(--surface-soft); }
+
+  /* Apercu de Logi (conversation) */
+  .feature-inner { display: flex; flex-wrap: wrap; }
+  .feature-inner > .card-body { flex: 1 1 420px; min-width: 0; }
+  .preview { flex: 1 1 420px; min-width: 0; background: #12161B; padding: 26px; display: flex; flex-direction: column; gap: 12px; }
+  .preview-bar { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: #9AA3AD; font-family: "IBM Plex Mono", monospace; font-size: 12px; }
+  .bubble { max-width: 92%; padding: 12px 14px; border-radius: 12px; font-size: 14.5px; line-height: 1.5; }
+  .bubble.user { align-self: flex-end; background: #2A3038; color: #F1F3F5; border-bottom-right-radius: 4px; }
+  .bubble.bot { align-self: flex-start; background: #1C2A29; color: #E6EFEE; border: 1px solid #23403D; border-bottom-left-radius: 4px; }
+  .bubble.bot b { color: #9FD8D2; }
+  .bubble .src { display: block; margin-top: 8px; font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: #8FB5B1; }
+
+  /* Parcours */
+  .xp-list { display: flex; flex-direction: column; gap: 18px; }
+  .xp { display: flex; flex-wrap: wrap; gap: 10px 40px; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+  .xp-meta { flex: 1 1 200px; display: flex; flex-direction: column; gap: 2px; }
+  .xp-meta .date { font-family: "IBM Plex Mono", monospace; font-size: 14px; color: var(--muted); }
+  .xp-meta .kind { font-size: 15px; color: var(--muted); }
+  .xp-main { flex: 999 1 540px; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+  .xp-main h3 { font-size: 21px; line-height: 1.3; font-weight: 600; }
+  .xp-main .org { margin: 2px 0 0; color: var(--muted); }
+  .xp-main ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 7px; color: var(--ink-2); }
+  .xp-main li::marker { color: var(--accent); }
+
+  .sub-h { font-size: 26px; line-height: 1.2; font-weight: 700; }
+  .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 18px; }
+  .edu { padding: 26px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); display: flex; flex-direction: column; gap: 6px; }
+  .edu .date { font-family: "IBM Plex Mono", monospace; font-size: 14px; color: var(--muted); }
+  .edu h3 { font-size: 19px; line-height: 1.35; font-weight: 600; }
+  .edu p { margin: 0; color: var(--muted); }
+
+  .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 24px; }
+  .skills h3 { font-size: 16px; font-weight: 600; margin-bottom: 12px; }
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 0; padding: 0; }
+  .pills li { padding: 6px 12px; border-radius: 6px; background: var(--chip); font-size: 14px; }
+
+  /* Certifications */
+  .certs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 16px; }
+  .cert { padding: 24px; border: 1px solid var(--line); border-radius: var(--radius); display: flex; flex-direction: column; gap: 6px; background: var(--surface); }
+  .cert .org { font-family: "IBM Plex Mono", monospace; font-size: 13px; color: var(--muted); }
+  .cert h3 { font-size: 18px; line-height: 1.35; font-weight: 600; }
+  .cert p { margin: 0; font-size: 15px; color: var(--muted); }
+  .cert.progress { border-color: var(--accent); background: var(--accent-soft); }
+
+  /* Contact */
+  .contact { background: var(--dark); color: var(--dark-ink); }
+  .contact .sec { flex-direction: row; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 36px; }
+  .contact .sec-head p { color: #8FD3CC; }
+  .contact .intro { flex: 1 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 14px; }
+  .contact .intro p.txt { margin: 0; color: #C9CBD1; max-width: 540px; }
+  .btn.light { background: var(--dark-ink); border-color: var(--dark-ink); color: var(--dark); }
+  .btn.light:hover { background: #fff; color: var(--dark); }
+  .btn.ghost { background: transparent; border-color: #5A5F69; color: var(--dark-ink); }
+  .btn.ghost:hover { border-color: var(--dark-ink); color: #fff; }
+  footer { border-top: 1px solid #2E3138; }
+  footer p { margin: 0; padding: 22px 0; font-size: 14px; color: #A3A6AE; }
+
+  @media (max-width: 640px) {
+    body { font-size: 16px; }
+    .hero { padding-block: 56px; }
+    .sec { padding-block: 60px; }
+    .xp, .card-body, .preview, .edu, .cert { padding: 22px; }
+    .nav ul a { padding: 8px 10px; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#projets">Aller aux projets</a>
+
+<header class="top">
+  <nav class="wrap nav" aria-label="Navigation principale">
+    <a class="brand" href="#top" aria-label="Frédéric Moukengue, retour en haut de page"><span class="logo" aria-hidden="true">FM</span><span>Frédéric Moukengue</span></a>
+    <ul>
+      <li><a href="#projets">Projets</a></li>
+      <li><a href="#parcours">Parcours</a></li>
+      <li><a href="#certifications">Certifications</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ============ ACCUEIL ============ -->
+  <section class="wrap hero" aria-labelledby="hero-title">
+    <div class="chips">
+      <span class="chip-status"><span class="dot" aria-hidden="true"></span>Disponible pour un CDI</span>
+      <span class="chip-plain">Paris, Île-de-France</span>
+    </div>
+    <p class="eyebrow">Ingénieur Data &amp; IA</p>
+    <h1 id="hero-title">Je construis des pipelines de données et des assistants IA qui résolvent de vrais problèmes.</h1>
+    <p class="lead">Jeune diplômé d'un Master Data et IA, je conçois des pipelines de données (PySpark, Databricks, Airflow) et des solutions IA appliquées à des cas métier : agents, RAG, modèles prédictifs.</p>
+    <div class="btns">
+      <a class="btn primary" href="CV_Frederic_Moukengue.pdf" download>
+        Télécharger mon CV
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12"/><path d="M6 11l6 6 6-6"/><path d="M5 20h14"/></svg>
+      </a>
+      <a class="btn" href="https://github.com/fredSup" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn" href="https://www.linkedin.com/in/frederic-moukengue" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </section>
+
+  <!-- ============ PROJETS ============ -->
+  <section id="projets" class="band" aria-labelledby="projets-title">
+    <div class="wrap sec">
+      <div class="sec-head">
+        <p>01 — Projets</p>
+        <h2 id="projets-title">Ce que j'ai construit</h2>
+      </div>
+
+      <div class="grid">
+
+        <!-- Logi (projet phare) -->
+        <article class="card feature">
+          <div class="feature-inner">
+            <div class="card-body">
+              <div class="card-title">
+                <h3>Logi, l'assistant logement</h3>
+                <span class="tag live">En ligne</span>
+                <span class="tag beta">Bêta</span>
+              </div>
+              <p>Un assistant IA qui répond aux questions des étudiants sur la <strong>CAF</strong>, la <strong>garantie Visale</strong> et le <strong>logement CROUS</strong>, à partir de sources officielles qu'il cite, au lieu de jongler entre dix onglets.</p>
+              <p>Architecture RAG avec contrôle qualité de l'ingestion, embeddings multilingues, mémoire de conversation et reformulation des questions de suivi.</p>
+              <p class="stack">Python · LangChain · ChromaDB · Groq (LLM) · Streamlit</p>
+              <div class="btns">
+                <a class="btn primary sm" href="https://logi-assistant.streamlit.app" target="_blank" rel="noopener">
+                  Tester la démo
+                  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M8 7h9v9"/></svg>
+                </a>
+                <a class="btn sm" href="https://github.com/fredSup/assistant-logement-rag" target="_blank" rel="noopener">Code sur GitHub</a>
+              </div>
+            </div>
+            <div class="preview" aria-label="Exemple de conversation avec Logi" role="img">
+              <div class="preview-bar"><span>logi-assistant.streamlit.app</span><span>exemple</span></div>
+              <div class="bubble user">C'est quoi la CAF ?</div>
+              <div class="bubble bot">La <b>CAF</b> (Caisse d'allocations familiales) est un organisme public de la Sécurité sociale. Pour un étudiant, c'est surtout elle qui verse l'<b>aide au logement</b> (APL, ALS, ALF) pour réduire le loyer.<span class="src">Source : glossaire · service-public.gouv.fr</span></div>
+              <div class="bubble user">Et pour Visale, quel loyer maximum à Paris ?</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Projet restaurant -->
+        <article class="card">
+          <div class="card-body">
+            <div class="card-title">
+              <h3>Prédiction du déclin des restaurants</h3>
+              <span class="tag">Projet de fin d'études</span>
+            </div>
+            <p>Pipeline ETL/ELT complet qui collecte, nettoie et transforme un grand volume d'avis clients stockés dans Amazon Redshift, puis analyse le sentiment et les thèmes récurrents pour identifier les restaurants à risque de déclin.</p>
+            <p class="stack">PySpark · Databricks · Amazon Redshift · SQL · Python</p>
+            <div class="btns">
+              <a class="btn sm" href="https://gitlab.com/tefora-group/crunchyfastfood-ia-dev" target="_blank" rel="noopener">Code sur GitLab</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Automatisations n8n -->
+        <article class="card">
+          <div class="card-body">
+            <div class="card-title">
+              <h3>Agents IA &amp; automatisations n8n</h3>
+            </div>
+            <p>Plusieurs workflows n8n intégrant des agents IA connectés à une base de connaissances privée (RAG), pour automatiser le traitement de requêtes textuelles.</p>
+            <p><strong>Bientôt :</strong> un assistant vocal de réservation pour restaurant, publié avec son code.</p>
+            <p class="stack">n8n · Python · LLM · RAG · Agents IA</p>
+            <div class="btns">
+              <a class="btn sm" href="#contact">Code disponible sur demande</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Assistant recruteurs (à venir) -->
+        <article class="card soon">
+          <div class="card-body">
+            <div class="card-title">
+              <h3>Assistant Recruteurs</h3>
+              <span class="tag">En préparation</span>
+            </div>
+            <p>Un assistant RAG pour aider les recruteurs à embaucher un étudiant étranger en CDI : changement de statut, autorisation de travail, documents et délais, sous forme de checklist adaptée au profil.</p>
+          </div>
+        </article>
+
+        <!-- Module agent de Logi (à venir) -->
+        <article class="card soon">
+          <div class="card-body">
+            <div class="card-title">
+              <h3>Module agent pour Logi</h3>
+              <span class="tag">En préparation</span>
+            </div>
+            <p>La prochaine étape de Logi : un agent capable de réaliser certaines démarches directement pour l'étudiant, au-delà de la simple réponse.</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PARCOURS ============ -->
+  <section id="parcours" aria-labelledby="parcours-title">
+    <div class="wrap sec">
+      <div class="sec-head">
+        <p>02 — Parcours</p>
+        <h2 id="parcours-title">Expériences</h2>
+      </div>
+
+      <div class="xp-list">
+        <article class="xp">
+          <div class="xp-meta">
+            <span class="date">mars – juillet 2026</span>
+            <span class="kind">Paris · Stage</span>
+          </div>
+          <div class="xp-main">
+            <div>
+              <h3>Consultant CRM &amp; Data</h3>
+              <p class="org">Berceau Sonore (Quantum Pathway Academy)</p>
+            </div>
+            <ul>
+              <li>Mise en place d'un <strong>tunnel de vente automatisé</strong> (paiement, facturation, e-mailing, onboarding) et d'une boutique en ligne.</li>
+              <li><strong>Workflows Make et n8n</strong> et intégration d'API entre Stripe, Tiime et Schoolmaker : fin de la saisie comptable manuelle.</li>
+              <li>Automatisation du <strong>suivi CRM</strong> des campagnes e-mailing.</li>
+            </ul>
+            <p class="stack">Make · n8n · Stripe · Tiime · Schoolmaker · API REST</p>
+          </div>
+        </article>
+
+        <article class="xp">
+          <div class="xp-meta">
+            <span class="date">juin – septembre 2025</span>
+            <span class="kind">Paris · Stage</span>
+          </div>
+          <div class="xp-main">
+            <div>
+              <h3>Développeur Backend &amp; Automatisation</h3>
+              <p class="org">Motuka Service</p>
+            </div>
+            <ul>
+              <li><strong>Pipeline de collecte des prospects</strong> : formulaire de contact → Zapier → Google Sheets → Power BI.</li>
+              <li><strong>Tableaux de bord Power BI</strong> pour suivre les prospects et orienter la prospection.</li>
+              <li>Maintenance corrective et évolutive du site.</li>
+            </ul>
+            <p class="stack">WordPress · Zapier · Google Sheets · Power BI</p>
+          </div>
+        </article>
+      </div>
+
+      <h2 class="sub-h">Formation</h2>
+      <div class="two">
+        <article class="edu">
+          <span class="date">nov. 2025 – sept. 2026</span>
+          <h3>Master 2 · Architecte en Intelligence Artificielle</h3>
+          <p>Campus Fonderie de l'image, Paris</p>
+          <p>Gouvernance des données, pipelines de données automatisés, traitement distribué et optimisation pour grandes volumétries.</p>
+        </article>
+        <article class="edu">
+          <span class="date">nov. 2024 – avr. 2025</span>
+          <h3>Master 1 · Software Engineering &amp; Data</h3>
+          <p>SUPINFO, Paris</p>
+          <p>APIs REST et architectures inter-services, Big Data, ETL/ELT, orchestration (Airflow, Dagster), data visualisation.</p>
+        </article>
+      </div>
+
+      <h2 class="sub-h">Compétences</h2>
+      <div class="skills">
+        <div>
+          <h3>Data, IA &amp; Cloud</h3>
+          <ul class="pills">
+            <li>SQL</li><li>Databricks</li><li>PySpark</li><li>Airflow</li><li>Dagster</li><li>dbt</li><li>ETL/ELT</li><li>Power BI</li><li>AWS Redshift</li><li>LLMs &amp; RAG</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Backend &amp; DevOps</h3>
+          <ul class="pills">
+            <li>Python</li><li>Node.js</li><li>JavaScript</li><li>APIs REST</li><li>Webhooks</li><li>Docker</li><li>Git</li><li>Kubernetes</li>
+          </ul>
+        </div>
+        <div>
+          <h3>CRM &amp; Automatisation</h3>
+          <ul class="pills">
+            <li>n8n</li><li>Make</li><li>Zapier</li><li>HubSpot</li><li>Salesforce</li><li>Crococlick</li><li>Stripe</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CERTIFICATIONS ============ -->
+  <section id="certifications" class="band" aria-labelledby="certif-title">
+    <div class="wrap sec">
+      <div class="sec-head">
+        <p>03 — Certifications</p>
+        <h2 id="certif-title">Certifications</h2>
+      </div>
+      <div class="certs">
+        <article class="cert progress">
+          <span class="org">Databricks · en cours</span>
+          <h3>Databricks Certified Data Engineer Associate</h3>
+          <p>Préparation en cours.</p>
+        </article>
+        <article class="cert">
+          <span class="org">LinkedIn Learning</span>
+          <h3>DevOps</h3>
+          <p>Certificat d'accomplissement</p>
+        </article>
+        <article class="cert">
+          <span class="org">LinkedIn Learning</span>
+          <h3>Administration Linux &amp; Bash</h3>
+          <p>Certificat d'accomplissement</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!--
+    RECOMMANDATION : section prete, a activer apres accord d'Antonia Dubrulle.
+    Pour l'activer, retirer les balises de commentaire autour du bloc ci-dessous.
+
+  <section aria-labelledby="reco-title">
+    <div class="wrap sec">
+      <div class="sec-head"><p id="reco-title">04 — Recommandation</p></div>
+      <figure style="margin:0; display:flex; flex-direction:column; gap:18px; max-width:900px">
+        <blockquote style="margin:0; font-size:clamp(1.4rem,3vw,2rem); line-height:1.35; font-weight:500">« Je ne peux que le recommander chaleureusement et le remercier pour tout ce qu'il a mis en place. »</blockquote>
+        <figcaption><strong>Antonia Dubrulle</strong><br><span style="color:var(--muted)">Directrice, Quantum Pathway Academy · Lettre complète disponible sur demande</span></figcaption>
+      </figure>
+    </div>
+  </section>
+  -->
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact" class="contact" aria-labelledby="contact-title">
+    <div class="wrap sec">
+      <div class="intro">
+        <div class="sec-head">
+          <p>04 — Contact</p>
+          <h2 id="contact-title">Discutons de votre prochain projet data.</h2>
+        </div>
+        <p class="txt">Je recherche un premier CDI en data engineering et IA. Le plus simple pour me joindre : un e-mail ou un message sur LinkedIn.</p>
+      </div>
+      <div class="btns">
+        <a class="btn light" href="mailto:moukenguefrederic@gmail.com">moukenguefrederic@gmail.com</a>
+        <a class="btn ghost" href="https://www.linkedin.com/in/frederic-moukengue" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn ghost" href="https://github.com/fredSup" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+    <footer>
+      <div class="wrap"><p>© 2026 Frédéric Moukengue · Ingénieur Data &amp; IA</p></div>
+    </footer>
+  </section>
+
+</main>
+</body>
+</html>
