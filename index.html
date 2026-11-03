@@ -138,6 +138,20 @@
   .bubble.bot b { color: #9FD8D2; }
   .bubble .src { display: block; margin-top: 8px; font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: #8FB5B1; }
 
+
+  /* Visuels des projets (image, capture, video) */
+  .shot { flex: 1 1 420px; min-width: 0; background: #12161B; padding: 26px; display: flex; flex-direction: column; justify-content: center; gap: 10px; }
+  .shot img { display: block; width: 100%; height: auto; border-radius: 8px; border: 1px solid rgba(255,255,255,0.08); }
+  .shot figcaption { color: #9AA3AD; font-family: "IBM Plex Mono", monospace; font-size: 12px; }
+  .shot.light { background: var(--tint); }
+  .shot.light img { border-color: var(--tint-line); box-shadow: 0 8px 24px rgba(18,32,31,0.12); }
+  .shot.light figcaption { color: var(--muted); }
+  .video-frame { position: relative; aspect-ratio: 16 / 9; border-radius: 8px; overflow: hidden; background: #1C2A29; border: 1px dashed #3C5C58; display: grid; place-items: center; text-align: center; color: #B9C7C5; }
+  .video-frame iframe, .video-frame video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .play { width: 64px; height: 64px; border-radius: 999px; background: rgba(127,209,200,0.16); display: grid; place-items: center; margin: 0 auto 10px; }
+  /* Grand ecran : le visuel passe a gauche une carte sur deux (alternance) */
+  @media (min-width: 900px) { .feature.reverse .shot { order: -1; } }
+
   /* Parcours */
   .xp-list { display: flex; flex-direction: column; gap: 18px; }
   .xp { display: flex; flex-wrap: wrap; gap: 10px 40px; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
@@ -187,7 +201,7 @@
     body { font-size: 16px; }
     .hero { padding-block: 56px; }
     .sec { padding-block: 60px; }
-    .xp, .card-body, .preview, .edu, .cert { padding: 22px; }
+    .xp, .card-body, .preview, .shot, .edu, .cert { padding: 22px; }
     .nav ul a { padding: 8px 10px; }
   }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .lift { transition: none; } .lift:hover, .lift:focus-within { transform: none; } }
@@ -277,53 +291,85 @@
           </div>
         </article>
 
-        <!-- Projet restaurant -->
-        <article class="card lift">
-          <div class="card-body">
-            <div class="card-title">
-              <h3>Prédiction du déclin des restaurants</h3>
-              <span class="tag">Projet de fin d'études</span>
+        <!-- Projet restaurant : visuel a droite -->
+        <article class="card feature lift">
+          <div class="feature-inner">
+            <div class="card-body">
+              <div class="card-title">
+                <h3>Prédiction du déclin des restaurants</h3>
+                <span class="tag">Projet de fin d'études</span>
+              </div>
+              <p>Pipeline ETL/ELT complet qui collecte, nettoie et transforme un grand volume d'avis clients stockés dans Amazon Redshift, puis analyse le sentiment et les thèmes récurrents pour identifier les restaurants à risque de déclin.</p>
+              <p class="stack">PySpark · Databricks · Amazon Redshift · SQL · Python</p>
+              <div class="btns">
+                <a class="btn sm" href="https://gitlab.com/tefora-group/crunchyfastfood-ia-dev" target="_blank" rel="noopener">Code sur GitLab</a>
+              </div>
             </div>
-            <p>Pipeline ETL/ELT complet qui collecte, nettoie et transforme un grand volume d'avis clients stockés dans Amazon Redshift, puis analyse le sentiment et les thèmes récurrents pour identifier les restaurants à risque de déclin.</p>
-            <p class="stack">PySpark · Databricks · Amazon Redshift · SQL · Python</p>
-            <div class="btns">
-              <a class="btn sm" href="https://gitlab.com/tefora-group/crunchyfastfood-ia-dev" target="_blank" rel="noopener">Code sur GitLab</a>
-            </div>
+            <figure class="shot" style="margin:0">
+              <img src="images/dashboard-donut.png" width="573" height="423" loading="lazy"
+                   alt="Tableau de bord Databricks : répartition de 3 381 restaurants par niveau de risque (modéré 41 %, faible 32,8 %, élevé 26,2 %)">
+              <figcaption>Tableau de bord Databricks · suivi des risques</figcaption>
+            </figure>
           </div>
         </article>
 
-        <!-- Assistant vocal de reservation -->
-        <article class="card lift">
-          <div class="card-body">
-            <div class="card-title">
-              <h3>Assistant vocal de réservation pour restaurant</h3>
+        <!-- Unifia : visuel a droite -->
+        <article class="card feature lift">
+          <div class="feature-inner">
+            <div class="card-body">
+              <div class="card-title">
+                <h3>Unifia, qualité et unification de données</h3>
+                <span class="tag live">En ligne</span>
+              </div>
+              <p>Un outil qui <strong>nettoie un fichier</strong> (doublons, vides, valeurs aberrantes, formats mélangés) et <strong>réunit les mêmes clients</strong> dispersés dans plusieurs logiciels en une fiche unique par client.</p>
+              <p>Pipeline bronze/silver/gold, dédoublonnage par score explicable (précision de 100 % mesurée), IA calibrée sur les cas douteux avec revue humaine, rapport d'audit aux chiffres vérifiés.</p>
+              <p class="stack">Python · Polars · DuckDB · RapidFuzz · Groq (LLM) · Streamlit</p>
+              <div class="btns">
+                <a class="btn primary sm" href="https://unifia-fred.streamlit.app/" target="_blank" rel="noopener">
+                  Tester la démo
+                  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M8 7h9v9"/></svg>
+                </a>
+                <a class="btn sm" href="https://github.com/fredSup/qualite-donnees-clients" target="_blank" rel="noopener">Code sur GitHub</a>
+              </div>
             </div>
-            <p>Un assistant vocal qui prend en charge les réservations d'un restaurant, construit avec n8n et des agents IA.</p>
-            <p class="stack">n8n · LLM · Agents IA</p>
-            <div class="btns">
-              <a class="btn primary sm disabled" href="#" aria-disabled="true">Tester la démo (bientôt)</a>
-              <a class="btn sm" href="#contact">Code disponible sur demande</a>
-            </div>
+            <figure class="shot" style="margin:0">
+              <img src="images/unifia-diagnostic.png" width="1200" height="650" loading="lazy"
+                   alt="Écran Diagnostic d'Unifia : score de qualité passé de 79,1 à 88,8 sur 100, et 5 dimensions mesurées avant et après traitement">
+              <figcaption>Écran Diagnostic · score de qualité avant → après</figcaption>
+            </figure>
           </div>
         </article>
 
-        <!-- Assistant recruteurs (à venir) -->
-        <article class="card soon lift">
-          <div class="card-body">
-            <div class="card-title">
-              <h3>Assistant Recruteurs</h3>
-              <span class="tag">En préparation</span>
+        <!-- Assistant vocal : video a droite -->
+        <article class="card feature lift">
+          <div class="feature-inner">
+            <div class="card-body">
+              <div class="card-title">
+                <h3>Assistant vocal de réservation pour restaurant</h3>
+              </div>
+              <p>Un assistant vocal qui prend en charge les réservations d'un restaurant, construit avec n8n et des agents IA.</p>
+              <p class="stack">n8n · LLM · Agents IA</p>
+              <div class="btns">
+                <a class="btn sm" href="#contact">Code disponible sur demande</a>
+              </div>
             </div>
-            <p>Un assistant RAG pour aider les recruteurs à embaucher un étudiant étranger en CDI : changement de statut, autorisation de travail, documents et délais, sous forme de checklist adaptée au profil.</p>
-            <p class="stack">Python · LangChain · ChromaDB · Groq (LLM) · Streamlit</p>
-            <div class="btns">
-              <a class="btn primary sm disabled" href="#" aria-disabled="true">Démo bientôt disponible</a>
-            </div>
+            <figure class="shot" style="margin:0">
+              <div class="video-frame">
+                <!-- VIDEO : remplacer tout le bloc <div class="bientot"> par UNE de ces lignes
+                     YouTube : <iframe src="https://www.youtube-nocookie.com/embed/ID_VIDEO" title="Démo de l'assistant vocal" allowfullscreen></iframe>
+                     Fichier : <video src="images/demo-vocal.mp4" controls preload="metadata"></video> -->
+                <div class="bientot">
+                  <div class="play"><svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="#7FD1C8"><path d="M8 5v14l11-7z"/></svg></div>
+                  <span>Démo vidéo bientôt disponible</span>
+                </div>
+              </div>
+              <figcaption>Démo · une réservation par téléphone, de bout en bout</figcaption>
+            </figure>
           </div>
         </article>
 
-        <!-- Autres projets -->
-        <article class="card lift">
+        <!-- Autres projets : pleine largeur, sans visuel -->
+        <article class="card feature lift">
           <div class="card-body">
             <div class="card-title">
               <h3>Autres projets de développement</h3>
